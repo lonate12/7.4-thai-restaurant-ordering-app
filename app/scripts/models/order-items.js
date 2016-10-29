@@ -1,15 +1,15 @@
 var Backbone = require('backbone');
 
-var OrderItem = Backbone.Model.extend({
+var Order = Backbone.Model.extend({
   idAttribute: '_id'
 });
 
-var OrderItemCollection = Backbone.Collection.extend({
-  model: OrderItem,
+var OrderCollection = Backbone.Collection.extend({
+  model: Order,
   url: 'https://tiny-lasagna-server.herokuapp.com/collections/rene-thai-orders'
 });
 
 module.exports = {
-  OrderItem: OrderItem,
-  OrderItemCollection: OrderItemCollection
+  Order: Order,
+  OrderCollection: OrderCollection
 };
