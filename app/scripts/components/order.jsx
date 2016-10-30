@@ -42,7 +42,7 @@ var MenuTable = React.createClass({
       if(menuItem.get('category') !== lastCategory){
         rows.push(<MenuCategoryRow category={menuItem.get('category')} key={menuItem.get('_id')} />);
       }
-      rows.push(<MenuItemRow name={menuItem.get('name')} price={menuItem.get('price')} key={menuItem.get('_id')}/>);
+      rows.push(<MenuItemRow name={menuItem.get('name')} price={menuItem.get('price')} key={menuItem.get('name')}/>);
       rows.push(<MenuDescriptionRow description={menuItem.get('description')} key={menuItem.get('description')}/>);
       lastCategory = menuItem.get('category');
     });
