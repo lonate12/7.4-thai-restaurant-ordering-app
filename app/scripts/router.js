@@ -2,7 +2,7 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 var React = require('react');
 var ReactDOM = require('react-dom');
-var OrderContainer = require('./components/order.jsx').OrderContainer;
+var ApplicationView = require('./components/order.jsx').ApplicationView;
 var MenuItemCollection = require('./models/menu-items.js').MenuItemCollection;
 
 var AppRouter = Backbone.Router.extend({
@@ -11,7 +11,7 @@ var AppRouter = Backbone.Router.extend({
   },
   index: function(){
     ReactDOM.render(
-      React.createElement(OrderContainer),
+      React.createElement(ApplicationView),
       document.getElementById('app')
     );
   }
