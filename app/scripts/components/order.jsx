@@ -5,33 +5,56 @@ var MenuItemCollection = require('../models/menu-items.js').MenuItemCollection;
 var Order = require('../models/order-items.js').Order;
 var OrderCollection = require('../models/order-items.js').OrderCollection;
 
-var MenuList = React.createClass({
+var MenuCategoryRow = React.createClass({
   render: function(){
+    console.log(this.props);
+    return(
+      <tr><th colSpan="2">{this.props.category}</th></tr>
+    );
+  }
+});
+
+var MenuItemRow = React.createClass({
+  render: function(){
+    return(
+      <tr>
+        <td className="menu-item">{this.props.name}</td>
+        <td className="item-price">{this.props.price}</td>
+        <td className="glyphicon glyphicon-plus"></td>
+      </tr>
+    );
+  }
+});
+
+var MenuDescriptionRow = React.createClass({
+  render: function(){
+    return(
+      <tr><td className="menu-item-description" colSpan="2">{this.props.description}</td></tr>
+    );
+  }
+});
+
+var MenuTable = React.createClass({
+  render: function(){
+    var rows =[];
+    var lastCategory = null;
+    this.props.menuCollection.forEach(function(menuItem){
+      if(menuItem.get('category') !== lastCategory){
+        rows.push(<MenuCategoryRow category={menuItem.get('category')} key={menuItem.get('_id')} />);
+      }
+      rows.push(<MenuItemRow name={menuItem.get('name')} price={menuItem.get('price')} key={menuItem.get('_id')}/>);
+      rows.push(<MenuDescriptionRow description={menuItem.get('description')} key={menuItem.get('description')}/>);
+      lastCategory = menuItem.get('category');
+    });
+    console.log(rows);
     return(
       <div className="col-md-9 menu-container">
-        <MenuCategory></MenuCategory>
+        <table>
+          <tbody>
+            {rows}
+          </tbody>
+        </table>
       </div>
-    );
-  }
-});
-
-var MenuCategory = React.createClass({
-  render: function(){
-    return(
-      <ul className="category">
-        A category
-        <MenuItem></MenuItem>
-      </ul>
-    );
-  }
-});
-
-var MenuItem = React.createClass({
-  render: function(){
-    return(
-      <li className="menu-item">
-        Coke
-      </li>
     );
   }
 });
@@ -47,17 +70,31 @@ var OrderList = React.createClass({
 });
 
 var OrderContainer = React.createClass({
+  getDefaultProps: function(){
+    var menuList = new MenuItemCollection();
+
+    return {
+      menuCollection: menuList
+    };
+  },
   getInitialState: function(){
     var orderCollection = new OrderCollection();
 
     return {
-      collection: orderCollection
+      orderCollection: orderCollection
     };
+  },
+  componentWillMount: function(){
+    var self = this;
+
+    this.props.menuCollection.fetch().then(function(){
+      self.forceUpdate();
+    });
   },
   render: function(){
     return(
       <div className="row">
-        <MenuList></MenuList>
+        <MenuTable menuCollection={this.props.menuCollection}></MenuTable>
         <OrderList></OrderList>
       </div>
     );

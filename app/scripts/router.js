@@ -3,13 +3,13 @@ var Backbone = require('backbone');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var OrderContainer = require('./components/order.jsx').OrderContainer;
+var MenuItemCollection = require('./models/menu-items.js').MenuItemCollection;
 
 var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'index'
   },
   index: function(){
-    console.log('index fired');
     ReactDOM.render(
       React.createElement(OrderContainer),
       document.getElementById('app')
