@@ -62,22 +62,36 @@ var MenuTable = React.createClass({
   }
 });
 
-var OrderContainer = React.createClass({
-  getInitialState: function(){
-    var orderCollection = new OrderCollection();
-
-    return{
-      orderCollection: orderCollection
-    }
+var OrderListItem = React.createClass({
+  handleRemove: function(){
+    this.props.handleRemove(this.props.orderItem);
   },
   render: function(){
+    return(
+      <li className="order-list-item">{this.props.orderItem.get('name')} <span>{this.props.orderItem.get('price')}</span> <span className="remove" onClick={this.handleRemove}>Remove</span></li>
+    );
+  }
+});
+
+var OrderDiv = React.createClass({
+  render: function(){
+    var self = this;
+    console.log(this.props.orderCollection);
+    var currentOrderList = this.props.orderCollection.map(function(orderItem){
+      return(
+        <OrderListItem
+          key={orderItem.cid}
+          orderItem={orderItem}
+          handleRemove={self.props.handleRemove}
+        />
+      )
+    });
     return(
       <div className="col-md-3">
         <p className="my-order">My Order</p>
         <div className="order-div">
           <ul className="order-list">
-            <li className="order-list-item">Pad Thai <span>6.99</span> <span className="remove">Remove</span></li>
-            <li className="order-list-item">Coke <span>1.95</span> <span className="remove">Remove</span></li>
+            {currentOrderList}
           </ul>
           <p className="total">Total: $8.94</p>
           <button className="submit-order">Submit Order</button>
@@ -110,8 +124,12 @@ var ApplicationView = React.createClass({
     var orderItem = new Order(orderProps);
 
     this.state.orderCollection.add(orderItem);
-
+    this.setState({orderCollection: this.state.orderCollection});
+  },
+  handleRemove: function(orderItem){
     console.log(this.state.orderCollection);
+    this.state.orderCollection.remove(orderItem);
+    this.setState({orderCollection: this.state.orderCollection});
   },
   componentWillMount: function(){
     var self = this;
@@ -124,7 +142,7 @@ var ApplicationView = React.createClass({
     return(
       <div className="row">
         <MenuTable menuCollection={this.props.menuCollection} addItemToOrder={this.addItemToOrder}></MenuTable>
-        <OrderContainer></OrderContainer>
+        <OrderDiv orderCollection={this.state.orderCollection} handleRemove={this.handleRemove}></OrderDiv>
       </div>
     );
   }
