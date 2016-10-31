@@ -4,6 +4,7 @@ var MenuItem = require('../models/menu-items.js').MenuItem;
 var MenuItemCollection = require('../models/menu-items.js').MenuItemCollection;
 var OrderItem = require('../models/order-items.js').OrderItem;
 var OrderItemCollection = require('../models/order-items.js').OrderItemCollection;
+var Order = require('../models/order-items.js').Order;
 
 var MenuCategoryRow = React.createClass({
   render: function(){
@@ -74,9 +75,6 @@ var OrderListItem = React.createClass({
 });
 
 var OrderDiv = React.createClass({
-  handleSubmit: function(e){
-    this.props.handleSubmit(e);
-  },
   render: function(){
     var self = this;
     var currentOrderList = this.props.orderItemCollection.map(function(orderItem){
@@ -96,7 +94,7 @@ var OrderDiv = React.createClass({
             {currentOrderList}
           </ul>
           <p className="total">Total: ${this.props.orderItemCollection.total().toFixed(2)}</p>
-          <button className="submit-order" onClick={this.handleSubmit}>Submit Order</button>
+          <button className="submit-order" onClick={this.props.submitOrder}>Submit Order</button>
         </div>
       </div>
     )
@@ -115,7 +113,8 @@ var ApplicationView = React.createClass({
     var orderItemCollection = new OrderItemCollection();
 
     return {
-      orderItemCollection: orderItemCollection
+      orderItemCollection: orderItemCollection,
+      submitAvailable: false
     }
   },
   addItemToOrder: function(menuItem){
@@ -126,16 +125,33 @@ var ApplicationView = React.createClass({
     var orderItem = new OrderItem(orderProps);
 
     this.state.orderItemCollection.add(orderItem);
-    this.setState({orderItemCollection: this.state.orderItemCollection});
+    this.setState({orderItemCollection: this.state.orderItemCollection, submitAvailable: true});
   },
   handleRemove: function(orderItem){
-    console.log(this.state.orderItemCollection);
     this.state.orderItemCollection.remove(orderItem);
-    this.setState({orderItemCollection: this.state.orderItemCollection});
+
+    this.setState({
+      orderItemCollection: this.state.orderItemCollection
+    });
+
+    if(this.state.orderItemCollection.length == 0){
+      this.setState({submitAvailable: false});
+    }
+    console.log(this.state.orderItemCollection.length);
+    console.log(this.state.submitAvailable);
   },
-  handleSubmit: function(e){
-    e.preventDefault();
-    console.log('Trying to submit order');
+  submitOrder: function(){
+    var newOrder = new Order();
+    var newOrderProps = {
+      order_name: 'New Order',
+      time_placed: new Date(),
+      items: this.state.orderItemCollection.toJSON()
+    };
+
+    newOrder.set(newOrderProps);
+    newOrder.save();
+
+    this.setState({orderItemCollection: new OrderItemCollection()})
   },
   componentWillMount: function(){
     var self = this;
@@ -148,7 +164,7 @@ var ApplicationView = React.createClass({
     return(
       <div className="row">
         <MenuTable menuCollection={this.props.menuCollection} addItemToOrder={this.addItemToOrder}></MenuTable>
-        <OrderDiv handleSubmit={this.handleSubmit} orderItemCollection={this.state.orderItemCollection} handleRemove={this.handleRemove}></OrderDiv>
+        <OrderDiv submitOrder={this.submitOrder} orderItemCollection={this.state.orderItemCollection} handleRemove={this.handleRemove}></OrderDiv>
       </div>
     );
   }
