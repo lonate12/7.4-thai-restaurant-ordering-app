@@ -137,8 +137,6 @@ var ApplicationView = React.createClass({
     if(this.state.orderItemCollection.length == 0){
       this.setState({submitAvailable: false});
     }
-    console.log(this.state.orderItemCollection.length);
-    console.log(this.state.submitAvailable);
   },
   submitOrder: function(){
     var newOrder = new Order();
