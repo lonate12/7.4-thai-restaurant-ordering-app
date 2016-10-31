@@ -2,8 +2,8 @@ var React = require('react');
 
 var MenuItem = require('../models/menu-items.js').MenuItem;
 var MenuItemCollection = require('../models/menu-items.js').MenuItemCollection;
-var Order = require('../models/order-items.js').Order;
-var OrderCollection = require('../models/order-items.js').OrderCollection;
+var OrderItem = require('../models/order-items.js').OrderItem;
+var OrderItemCollection = require('../models/order-items.js').OrderItemCollection;
 
 var MenuCategoryRow = React.createClass({
   render: function(){
@@ -79,9 +79,7 @@ var OrderDiv = React.createClass({
   },
   render: function(){
     var self = this;
-    var total = 0;
-    var currentOrderList = this.props.orderCollection.map(function(orderItem){
-      total += orderItem.get('price');
+    var currentOrderList = this.props.orderItemCollection.map(function(orderItem){
       return(
         <OrderListItem
           key={orderItem.cid}
@@ -97,7 +95,7 @@ var OrderDiv = React.createClass({
           <ul className="order-list">
             {currentOrderList}
           </ul>
-          <p className="total">Total: ${total.toFixed(2)}</p>
+          <p className="total">Total: ${this.props.orderItemCollection.total().toFixed(2)}</p>
           <button className="submit-order" onClick={this.handleSubmit}>Submit Order</button>
         </div>
       </div>
@@ -114,10 +112,10 @@ var ApplicationView = React.createClass({
     };
   },
   getInitialState: function(){
-    var orderCollection = new OrderCollection();
+    var orderItemCollection = new OrderItemCollection();
 
     return {
-      orderCollection: orderCollection
+      orderItemCollection: orderItemCollection
     }
   },
   addItemToOrder: function(menuItem){
@@ -125,15 +123,15 @@ var ApplicationView = React.createClass({
       name: menuItem.get('name'),
       price: menuItem.get('price')
     };
-    var orderItem = new Order(orderProps);
+    var orderItem = new OrderItem(orderProps);
 
-    this.state.orderCollection.add(orderItem);
-    this.setState({orderCollection: this.state.orderCollection});
+    this.state.orderItemCollection.add(orderItem);
+    this.setState({orderItemCollection: this.state.orderItemCollection});
   },
   handleRemove: function(orderItem){
-    console.log(this.state.orderCollection);
-    this.state.orderCollection.remove(orderItem);
-    this.setState({orderCollection: this.state.orderCollection});
+    console.log(this.state.orderItemCollection);
+    this.state.orderItemCollection.remove(orderItem);
+    this.setState({orderItemCollection: this.state.orderItemCollection});
   },
   handleSubmit: function(e){
     e.preventDefault();
@@ -150,7 +148,7 @@ var ApplicationView = React.createClass({
     return(
       <div className="row">
         <MenuTable menuCollection={this.props.menuCollection} addItemToOrder={this.addItemToOrder}></MenuTable>
-        <OrderDiv handleSubmit={this.handleSubmit} orderCollection={this.state.orderCollection} handleRemove={this.handleRemove}></OrderDiv>
+        <OrderDiv handleSubmit={this.handleSubmit} orderItemCollection={this.state.orderItemCollection} handleRemove={this.handleRemove}></OrderDiv>
       </div>
     );
   }
