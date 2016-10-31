@@ -74,10 +74,14 @@ var OrderListItem = React.createClass({
 });
 
 var OrderDiv = React.createClass({
+  handleSubmit: function(e){
+    this.props.handleSubmit(e);
+  },
   render: function(){
     var self = this;
-    console.log(this.props.orderCollection);
+    var total = 0;
     var currentOrderList = this.props.orderCollection.map(function(orderItem){
+      total += orderItem.get('price');
       return(
         <OrderListItem
           key={orderItem.cid}
@@ -93,8 +97,8 @@ var OrderDiv = React.createClass({
           <ul className="order-list">
             {currentOrderList}
           </ul>
-          <p className="total">Total: $8.94</p>
-          <button className="submit-order">Submit Order</button>
+          <p className="total">Total: ${total.toFixed(2)}</p>
+          <button className="submit-order" onClick={this.handleSubmit}>Submit Order</button>
         </div>
       </div>
     )
@@ -131,6 +135,10 @@ var ApplicationView = React.createClass({
     this.state.orderCollection.remove(orderItem);
     this.setState({orderCollection: this.state.orderCollection});
   },
+  handleSubmit: function(e){
+    e.preventDefault();
+    console.log('Trying to submit order');
+  },
   componentWillMount: function(){
     var self = this;
 
@@ -142,7 +150,7 @@ var ApplicationView = React.createClass({
     return(
       <div className="row">
         <MenuTable menuCollection={this.props.menuCollection} addItemToOrder={this.addItemToOrder}></MenuTable>
-        <OrderDiv orderCollection={this.state.orderCollection} handleRemove={this.handleRemove}></OrderDiv>
+        <OrderDiv handleSubmit={this.handleSubmit} orderCollection={this.state.orderCollection} handleRemove={this.handleRemove}></OrderDiv>
       </div>
     );
   }
