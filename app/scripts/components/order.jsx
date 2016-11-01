@@ -23,7 +23,7 @@ var MenuItemRow = React.createClass({
       <tr>
         <td className="menu-item">{this.props.name}</td>
         <td className="item-price">{this.props.price}</td>
-        <td className="glyphicon glyphicon-plus" onClick={this.handleClick}></td>
+        <td className="add-item" onClick={this.handleClick}>Add</td>
       </tr>
     );
   }
@@ -89,7 +89,7 @@ var OrderDiv = React.createClass({
     return(
       <div className="col-md-3">
         <p className="my-order">My Order</p>
-        <div className="order-div">
+        <div className="order-div my-order">
           <ul className="order-list">
             {currentOrderList}
           </ul>

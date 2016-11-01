@@ -5,6 +5,14 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 // Import Bootstrap
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
+@font-face {
+  font-family: 'thai';
+  src: url('../fonts/padthai.ttf');
+}
+@font-face {
+  font-family: 'korean';
+  src: url('../fonts/Korean_Calligraphy.ttf');
+}
 
 *,
 *::before,
@@ -14,4 +22,36 @@ $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
 img {
   max-width: 100%;
+}
+
+body{
+  background-image: url('../images/bamboo-bg.jpg');
+  background-size: cover;
+}
+
+table{
+  background-color: white;
+  th{
+    font-family: 'thai';
+    text-decoration: underline;
+    font-size: 30px;
+    padding-left: 10px;
+  }
+  td{
+    font-family: 'korean';
+    padding-left: 14px;
+  }
+  .menu-item{
+    font-size: 20px;
+  }
+  .add-item{
+    font-size: 14px;
+    background-color: blue;
+    border-radius: 4px;
+    padding: 3px 6px;
+  }
+}
+
+.my-order{
+  background-color: white;
 }
