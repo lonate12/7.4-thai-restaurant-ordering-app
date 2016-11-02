@@ -15,10 +15,12 @@ var KitchenContainer = React.createClass({
     }
   },
   render: function(){
+    var orderCollection = this.state.orderCollection;
+    console.log(orderCollection);
     return(
       <div className="container">
         <div className="row">
-          {orders}
+          
         </div>
       </div>
     );
