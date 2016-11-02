@@ -30,12 +30,16 @@ body{
 }
 
 table{
-  background-color: white;
+  background-image: url('../images/paper-bg.jpg');
+  box-shadow: 5px 5px 3px;
+  border-radius: 2px;
+  margin-top: 15px;
   th{
     font-family: 'thai';
     text-decoration: underline;
     font-size: 30px;
-    padding-left: 10px;
+    padding-top: 10px;
+    padding-left: 5px;
   }
   td{
     font-family: 'korean';
@@ -46,12 +50,47 @@ table{
   }
   .add-item{
     font-size: 14px;
-    background-color: yellow;
     border-radius: 4px;
     padding: 3px 6px;
+    color: black;
+  }
+  .add-item:hover{
+    color: #556B2F;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 
-.my-order{
-  background-color: white;
+.order-div{
+  background-image: url('../images/paper-bg.jpg');
+  min-height: 300px;
+  margin-top: 18px;
+  border-radius: 2px;
+  box-shadow: 5px 5px 3px;
+  padding: 6px;
+  position: relative;
+  .order-name{
+    font-size: 22px;
+  }
+  .submit-order{
+    border-radius: 3px;
+    background-color: #556B2F;
+    color: white;
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+  }
+  p, ul, li, button {
+    font-family: 'korean';
+  }
+  ul{
+    list-style: none;
+    padding: 0;
+  }
+  .total{
+    text-align: right;
+    // position: absolute;
+    // bottom: 15px;
+    // left: 3px;
+  }
 }

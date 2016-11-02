@@ -88,8 +88,8 @@ var OrderDiv = React.createClass({
     });
     return(
       <div className="col-md-3">
-        <p className="my-order">My Order</p>
         <div className="order-div my-order">
+          <p className="order-name">My Order</p>
           <ul className="order-list">
             {currentOrderList}
           </ul>
