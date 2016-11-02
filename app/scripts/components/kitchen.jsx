@@ -20,15 +20,18 @@ var KitchenContainer = React.createClass({
       var orderItems = order.get('items');
       var itemsList = orderItems.map(function(item, index){
         return(
-          <li key={index}>{item.name}</li>
+          <li className="kitchen-items-li" key={index}>{item.name}</li>
         )
       });
       return(
         <div key={order.get('_id')} className="col-md-3">
-          <p>{order.get('time_placed')}</p>
-          <ul>
-            {itemsList}
-          </ul>
+          <div className="col-md-12 kitchen-order-view">
+            <p>{order.get('time_placed')}</p>
+            <p>{order.get('order_name')}</p>
+            <ul className="kitchen-items-ul">
+              {itemsList}
+            </ul>
+          </div>
         </div>
       );
     }
