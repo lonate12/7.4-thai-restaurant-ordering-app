@@ -16,11 +16,28 @@ var KitchenContainer = React.createClass({
   },
   render: function(){
     var orderCollection = this.state.orderCollection;
-    console.log(orderCollection);
+    var orders = orderCollection.map(function(order){
+      var orderItems = order.get('items');
+      var itemsList = orderItems.map(function(item, index){
+        return(
+          <li key={index}>{item.name}</li>
+        )
+      });
+      return(
+        <div key={order.get('_id')} className="col-md-3">
+          <p>{order.get('time_placed')}</p>
+          <ul>
+            {itemsList}
+          </ul>
+        </div>
+      );
+    }
+    );
+
     return(
       <div className="container">
         <div className="row">
-          
+          {orders}
         </div>
       </div>
     );
