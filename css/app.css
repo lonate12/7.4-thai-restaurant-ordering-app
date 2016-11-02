@@ -5776,28 +5776,29 @@ body {
   background-image: url("../images/bamboo-bg.jpg");
   background-size: cover; }
 
-table {
+.menu-table {
   background-image: url("../images/paper-bg.jpg");
   box-shadow: 5px 5px 3px;
   border-radius: 2px;
-  margin-top: 15px; }
-  table th {
+  margin-top: 15px;
+  margin-bottom: 15px; }
+  .menu-table .menu-header {
     font-family: 'thai';
     text-decoration: underline;
     font-size: 30px;
     padding-top: 10px;
     padding-left: 5px; }
-  table td {
+  .menu-table td {
     font-family: 'korean';
     padding-left: 14px; }
-  table .menu-item {
+  .menu-table .menu-item {
     font-size: 20px; }
-  table .add-item {
+  .menu-table .add-item {
     font-size: 14px;
     border-radius: 4px;
     padding: 3px 6px;
     color: black; }
-  table .add-item:hover {
+  .menu-table .add-item:hover {
     color: #556B2F;
     text-decoration: underline;
     cursor: pointer; }
@@ -5819,7 +5820,7 @@ table {
     position: absolute;
     bottom: 3px;
     right: 3px; }
-  .order-div p, .order-div ul, .order-div li, .order-div button {
+  .order-div p, .order-div ul, .order-div li, .order-div button, .order-div table {
     font-family: 'korean'; }
   .order-div ul {
     list-style: none;
