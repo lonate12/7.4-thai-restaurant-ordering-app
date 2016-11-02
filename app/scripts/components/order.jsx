@@ -9,7 +9,7 @@ var Order = require('../models/order-items.js').Order;
 var MenuCategoryRow = React.createClass({
   render: function(){
     return(
-      <tr><th colSpan="2">{this.props.category}</th></tr>
+      <tr><th colSpan="2" className="menu-header">{this.props.category}</th></tr>
     );
   }
 });
@@ -53,7 +53,7 @@ var MenuTable = React.createClass({
 
     return(
       <div className="col-md-9 menu-container">
-        <table>
+        <table className="menu-table">
           <tbody>
             {rows}
           </tbody>
@@ -69,7 +69,7 @@ var OrderListItem = React.createClass({
   },
   render: function(){
     return(
-      <li className="order-list-item">{this.props.orderItem.get('name')} <span>{this.props.orderItem.get('price')}</span> <span className="remove" onClick={this.handleRemove}>Remove</span></li>
+      <tr className="order-list-item"><td>{this.props.orderItem.get('name')}</td><td>{this.props.orderItem.get('price')}</td><td className="remove" onClick={this.handleRemove}>Remove</td></tr>
     );
   }
 });
@@ -90,9 +90,12 @@ var OrderDiv = React.createClass({
       <div className="col-md-3">
         <div className="order-div my-order">
           <p className="order-name">My Order</p>
-          <ul className="order-list">
-            {currentOrderList}
-          </ul>
+          <table className="order-list">
+            <tbody>
+              <tr><th>Item</th><th>Price</th></tr>
+              {currentOrderList}
+            </tbody>
+          </table>
           <p className="total">Total: ${this.props.orderItemCollection.total().toFixed(2)}</p>
           <button className="submit-order" onClick={this.props.submitOrder}>Submit Order</button>
         </div>
